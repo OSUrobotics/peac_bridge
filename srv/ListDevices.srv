@@ -1,0 +1,3 @@
+int16 locationId
+---
+peac_bridge/Device[] devices
