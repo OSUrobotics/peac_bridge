@@ -1,4 +1,4 @@
 int16 controlId
-int16 numval
+int16 numVal
 ---
 peac_bridge/Control control
