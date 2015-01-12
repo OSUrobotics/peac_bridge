@@ -61,7 +61,7 @@ class PEAC(object):
         Params: JSON Control Update Object
         Response: Control object
         '''
-        return self._PEAC_request(UPDATE_INFO, payload=dict(id=id, numval=numval))
+        return self._PEAC_request(UPDATE_INFO, payload=dict(id=id, numval=numval)).json()
 
 
 def test_server_responses():
