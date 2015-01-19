@@ -1,12 +1,20 @@
 #!/usr/bin/env python
-import json, requests
+import json
+#import requests
+import requesocks as requests
+import urlparse
 import time
 
 class PEACInfo:
     def __init__(self, url, method):
         self.url = url
         self.method = method
-        self.headers = {'Accept': 'application/json'}
+        self.headers = {
+            'accept': 'application/json',
+            'authorization': 'Basic RGFuOlZlcnlIYXJkVG9HdWVzcw==',
+            'host': 'localhost:8000',
+            'user-agent': 'curl/7.29.0'}
+
 
 LOCATION_INFO = PEACInfo('/service/locations.json', 'GET')
 DEVICES_INFO = PEACInfo('/service/locations/%(locationId)s/devices.json', 'GET')
@@ -15,13 +23,25 @@ UPDATE_INFO = PEACInfo('/service/controls/update.json', 'PUT')
 
 class PEAC(object):
 
-    def __init__(self, server, user, password):
+    def __init__(self, server, user, password, proxies={}):
         self.server = server
         self.authstr = '%s:%s' % (user,password)
+        self.proxies = proxies
+
+    def _make_url(self, peacinfo):
+        urlparts = list(urlparse.urlparse(self.server + peacinfo.url))
+        urlparts[1] = self.authstr + '@' + urlparts[1]
+        return urlparse.urlunparse(urlparts)
 
     def _PEAC_request(self, peacinfo, payload=None, url_args=dict()):
-        url = self.server + peacinfo.url
-        return requests.request(peacinfo.method, url % url_args, data=json.dumps(payload), headers=peacinfo.headers)
+        url = self._make_url(peacinfo)
+        if payload:
+            resp = requests.request(peacinfo.method, url % url_args, data=json.dumps(payload), headers=peacinfo.headers, proxies=self.proxies)
+        else:
+            resp = requests.request(peacinfo.method, url % url_args, headers=peacinfo.headers, proxies=self.proxies)
+        if not hasattr(resp, 'json'):
+            import pdb; pdb.set_trace()
+        return resp
 
     def list_locations(self):
         '''
@@ -65,11 +85,11 @@ class PEAC(object):
 
 
 def test_server_responses():
-    peac = PEAC('http://localhost:8000', '', '')
+    peac = PEAC('http://172.16.20.2', '', '', proxies={'http': 'socks5://localhost:8080'})
     print peac.list_locations()
-    print peac.list_devices(83)
-    print peac.get_device_info(1955)
-    print peac.update_control(5,0)
+    #print peac.list_devices(83)
+    #print peac.get_device_info(1955)
+    #print peac.update_control(5,0)
 
 if __name__ == '__main__':
     test_server_responses()
