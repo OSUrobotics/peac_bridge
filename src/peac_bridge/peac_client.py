@@ -39,8 +39,6 @@ class PEAC(object):
             resp = requests.request(peacinfo.method, url % url_args, data=json.dumps(payload), headers=peacinfo.headers, proxies=self.proxies)
         else:
             resp = requests.request(peacinfo.method, url % url_args, headers=peacinfo.headers, proxies=self.proxies)
-        if not hasattr(resp, 'json'):
-            import pdb; pdb.set_trace()
         return resp
 
     def list_locations(self):
@@ -81,7 +79,7 @@ class PEAC(object):
         Params: JSON Control Update Object
         Response: Control object
         '''
-        return self._PEAC_request(UPDATE_INFO, payload=dict(id=id, numval=numval)).json()
+        return self._PEAC_request(UPDATE_INFO, payload=dict(id=id, numVal=numval)).json()
 
 
 def test_server_responses():
