@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import json
-#import requests
-import requesocks as requests
+import requests
+# import requesocks as requests
 import urlparse
 import time
 
@@ -11,14 +11,13 @@ class PEACInfo:
         self.method = method
         self.headers = {
             'accept': 'application/json',
-            'authorization': 'Basic RGFuOlZlcnlIYXJkVG9HdWVzcw==',
-            'host': 'localhost:8000',
-            'user-agent': 'curl/7.29.0'}
+            'Content-Type': 'application/json'
+        }
 
 
 LOCATION_INFO = PEACInfo('/service/locations.json', 'GET')
 DEVICES_INFO = PEACInfo('/service/locations/%(locationId)s/devices.json', 'GET')
-CONTROLS_INFO = PEACInfo('/service/devics/%(deviceId)s/controls.json', 'GET')
+CONTROLS_INFO = PEACInfo('/service/devices/%(deviceId)s/controls.json', 'GET')
 UPDATE_INFO = PEACInfo('/service/controls/update.json', 'PUT')
 
 class PEAC(object):
@@ -83,11 +82,12 @@ class PEAC(object):
 
 
 def test_server_responses():
-    peac = PEAC('http://172.16.20.2', '', '', proxies={'http': 'socks5://localhost:8080'})
+    import os
+    peac = PEAC('http://172.16.20.2', os.environ['PEAC_USER'], os.environ['PEAC_PASSWORD'], proxies={'http': 'http://localhost:8080'})
     print peac.list_locations()
-    #print peac.list_devices(83)
-    #print peac.get_device_info(1955)
-    #print peac.update_control(5,0)
+    print peac.list_devices(83)
+    print peac.get_device_info(1955)
+    print peac.update_control(5,0)
 
 if __name__ == '__main__':
     test_server_responses()
