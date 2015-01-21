@@ -22,14 +22,23 @@ class PeacBridge(object):
         return ListLocationsResponse([Location(locationId=l['id'], name=l['name']) for l in locations])
 
     def handle_get_device_info(self, req):
-        control = self.client.get_device_info(req.deviceId)[0]
-        return GetDeviceInfoResponse(Control(controlId=control['id'], numVal=control['numVal'], name=control['name']))
+        controls = self.client.get_device_info(req.deviceId)
+        return GetDeviceInfoResponse([Control(controlId=c['id'], numVal=c['numVal'], name=c['name']) for c in controls])
 
     def handle_update_control(self, req):
         control = self.client.update_control(req.controlId, req.numVal)[0]
         return UpdateControlResponse(Control(controlId=control['id'], numVal=control['numVal'], name=control['name']))
 
 if __name__ == '__main__':
+    import sys
+    SERVER = 'http://localhost:8000'
+    USER = ''
+    PASS = ''
+
+    argv = rospy.myargv(sys.argv)
+    if len(argv) == 4:
+        SERVER, USER, PASS = argv[1:]
+
     rospy.init_node('peac_bridge')
-    PeacBridge('http://localhost:8000', '', '')
+    PeacBridge(SERVER, USER, PASS)
     rospy.spin()
