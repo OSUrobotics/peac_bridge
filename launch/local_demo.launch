@@ -1,4 +1,4 @@
 <launch>
-	<node name="peac_bridge" type="bridge.py" pkg="peac_bridge" args="http://localhost:8000 Not Used"/>
+	<node name="peac" type="bridge.py" pkg="peac_bridge" args="http://localhost:8000 Not Used"/>
 	<node name="fake_peac_server" type="runserver.sh" pkg="peac_bridge"/>
 </launch>

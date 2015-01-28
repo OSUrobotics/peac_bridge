@@ -8,10 +8,10 @@ from peac_bridge.msg import Location, Device, Control
 class PeacBridge(object):
     def __init__(self, server, user, password):
         self.client = PEAC(server, user, password)
-        rospy.Service('list_devices', ListDevices, self.handle_list_devices)
-        rospy.Service('list_locations', ListLocations, self.handle_list_locations)
-        rospy.Service('get_device_info', GetDeviceInfo, self.handle_get_device_info)
-        rospy.Service('update_control', UpdateControl, self.handle_update_control)
+        rospy.Service('~list_devices', ListDevices, self.handle_list_devices)
+        rospy.Service('~list_locations', ListLocations, self.handle_list_locations)
+        rospy.Service('~get_device_info', GetDeviceInfo, self.handle_get_device_info)
+        rospy.Service('~update_control', UpdateControl, self.handle_update_control)
 
     def handle_list_devices(self, req):
         devices = self.client.list_devices(req.locationId)
