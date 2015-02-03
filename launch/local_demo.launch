@@ -1,4 +1,8 @@
 <launch>
-	<node name="peac" type="bridge.py" pkg="peac_bridge" args="http://localhost:8000 Not Used"/>
+	<include file="$(find peac_bridge)/launch/peac_bridge.launch">
+		<arg name="peac_server" value="http://localhost:8000"/>
+		<arg name="peac_user" value="Not"/>
+		<arg name="peac_pass" value="Used"/>
+	</include>
 	<node name="fake_peac_server" type="runserver.sh" pkg="peac_bridge"/>
 </launch>
