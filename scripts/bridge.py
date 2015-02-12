@@ -26,7 +26,7 @@ class PeacBridge(object):
         return GetDeviceInfoResponse([Control(controlId=c['id'], numVal=c['numVal'], name=c['name']) for c in controls])
 
     def handle_update_control(self, req):
-        control = self.client.update_control(req.controlId, req.numVal)[0]
+        control = self.client.update_control(req.controlId, req.numVal)
         return UpdateControlResponse(Control(controlId=control['id'], numVal=control['numVal'], name=control['name']))
 
 if __name__ == '__main__':
