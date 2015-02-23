@@ -24,7 +24,6 @@ class PEAC(object):
 
     def __init__(self, server, user, password, proxies={}):
         self.server = server
-        self.authstr = '%s:%s' % (user,password)
         self.user = user
         self.password = password
         self.proxies = proxies
