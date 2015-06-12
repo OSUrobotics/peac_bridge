@@ -15,6 +15,7 @@ add_message_files(
   Location.msg
   Device.msg
   Control.msg
+  ControlActuation.msg
 )
 
 ## Generate services in the 'srv' folder
