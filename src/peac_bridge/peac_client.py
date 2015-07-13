@@ -84,11 +84,11 @@ class PEAC(object):
 
 def test_server_responses():
     import os
-    peac = PEAC('http://172.16.20.2', os.environ['PEAC_USER'], os.environ['PEAC_PASSWORD'], proxies={'http': 'http://localhost:8080'})
-    print peac.list_locations()
-    print peac.list_devices(83)
-    print peac.get_device_info(1955)
-    print peac.update_control(5,0)
+    peac = PEAC('http://localhost:8000', os.environ['PEAC_USER'], os.environ['PEAC_PASSWORD'])
+    # print peac.list_locations()
+    # print peac.list_devices(83)
+    # print peac.get_device_info(1955)
+    print peac.update_control(5000,0)
 
 if __name__ == '__main__':
     test_server_responses()
