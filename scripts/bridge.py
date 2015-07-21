@@ -3,7 +3,7 @@ import rospy
 from peac_bridge.peac_client import PEAC
 from peac_bridge.srv import ListDevices, ListLocations, GetDeviceInfo, UpdateControl,\
     ListDevicesResponse, ListLocationsResponse, GetDeviceInfoResponse, UpdateControlResponse,\
-    Login, LoginRequest, LoginResponse
+    Login, LoginResponse, LoggedInUser, LoggedInUserResponse
 from peac_bridge.msg import Location, Device, Control
 from threading import Semaphore
 
@@ -17,6 +17,7 @@ class PeacBridge(object):
         rospy.Service('~get_device_info', GetDeviceInfo, self.handle_get_device_info)
         rospy.Service('~update_control', UpdateControl, self.handle_update_control)
         rospy.Service('~login', Login, self.handle_login)
+        rospy.Service('~current_user', LoggedInUser, self.handle_logged_in_user)
 
     def handle_list_devices(self, req):
         with self.sem:
@@ -46,6 +47,8 @@ class PeacBridge(object):
             return LoginResponse(True)
         return LoginResponse(False)
 
+    def handle_logged_in_user(self, req):
+        return LoggedInUserResponse(self.client.user)
 
 if __name__ == '__main__':
     import sys

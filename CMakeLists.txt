@@ -27,6 +27,7 @@ add_service_files(
   UpdateControl.srv
   ReportControlActuation.srv
   Login.srv
+  LoggedInUser.srv
 )
 
 ## Generate added messages and services with any dependencies listed here
