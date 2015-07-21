@@ -26,6 +26,7 @@ add_service_files(
   GetDeviceInfo.srv
   UpdateControl.srv
   ReportControlActuation.srv
+  Login.srv
 )
 
 ## Generate added messages and services with any dependencies listed here

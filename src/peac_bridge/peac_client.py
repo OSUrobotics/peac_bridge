@@ -81,6 +81,12 @@ class PEAC(object):
         # import pdb; pdb.set_trace()
         return self._PEAC_request(UPDATE_INFO, payload=dict(id=controlId, numVal=numval)).json()
 
+    def test_credentials(self):
+        '''
+        Tests credentials against PEAC server
+        '''
+        return self._PEAC_request(LOCATION_INFO).status_code == 200
+
 
 def test_server_responses():
     import os
