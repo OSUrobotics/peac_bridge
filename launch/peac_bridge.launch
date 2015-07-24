@@ -1,7 +1,7 @@
 <launch>
 	<arg name="peac_server" default="$(optenv PEAC_SERVER http://localhost:8000)"/>
-	<arg name="peac_user" default="$(optenv PEAC_USER DEFAULT_USERNAME)"/>
-	<arg name="peac_pass" default="$(optenv PEAC_PASSWORD DEFAULT_PASSWORD)"/>
+	<arg name="peac_user" default="$(env PEAC_USER)"/>
+	<arg name="peac_pass" default="$(env PEAC_PASSWORD)"/>
 	<arg name="single_threaded" default="false"/>
 	<node name="peac" type="bridge.py" pkg="peac_bridge" args="$(arg peac_server) $(arg peac_user) $(arg peac_pass)">
 		<param name="single_threaded" value="$(arg single_threaded)"/>
